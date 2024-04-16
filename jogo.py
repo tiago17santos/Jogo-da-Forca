@@ -12,6 +12,77 @@ def limpaTela():
     else:
         _ = system('clear')
 
+def desenhaBoneco(chances):
+    desenho = [
+        
+        '''
+        -----------
+        |         |
+        |         O
+        |        \\|/              
+        |         | 
+        |        / \\ 
+        | 
+        ''',
+        '''
+        -----------
+        |         |
+        |         O
+        |        \\|/              
+        |         | 
+        |        /  
+        | 
+        ''',
+        '''
+        -----------
+        |         |
+        |         O
+        |        \\|/              
+        |         | 
+        |          
+        | 
+        ''',
+        '''
+        -----------
+        |         |
+        |         O
+        |        \\|              
+        |         | 
+        |        
+        | 
+        ''',
+        '''
+        -----------
+        |         |
+        |         O
+        |         |             
+        |         | 
+        |         
+        | 
+        ''',
+        '''
+        -----------
+        |         |
+        |         O
+        |                     
+        |          
+        |         
+        | 
+        ''',
+        '''
+        -----------
+        |         |
+        |         
+        |                   
+        |         
+        |         
+        | 
+        '''
+
+
+    ]
+
+    return desenho[chances]
 
 def game():
     
@@ -24,7 +95,7 @@ def game():
 
     palavra = random.choice(listaPalavras)
 
-    chances = 5
+    chances = 6
 
     letrasCorretas = ['_' for letra in palavra]
 
@@ -33,12 +104,16 @@ def game():
     while chances > 0:
         
 
-        print(' '.join(letrasCorretas))
+        print(desenhaBoneco(chances))
         print('\n Chances restantes: ', chances)
         print('Letras erradas: ', ' '.join(letrasErradas))
         
 
         letraDigitada = input('\n Digite uma letra: ').lower()
+
+        if letraDigitada in letrasCorretas or letrasErradas:
+            print("Você ja digitou essa letra")
+            continue 
 
 
         if letraDigitada in palavra:
