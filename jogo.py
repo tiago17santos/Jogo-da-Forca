@@ -107,7 +107,6 @@ class Forca():
             if letra not in self.letrasCorretas:
                 rtn += '_'
             else:
-                #self.advinhaLetra(letra)
                 rtn += letra
         return rtn
 
@@ -208,57 +207,50 @@ class Forca():
         if '_' in letrasCorretas:
             print('Você perdeu. A palavra era: ', palavra)
 
+
+def escolhePalavra():
+    listaPalavras = ['melão','abacaxi','pera','maçã']
+
+    palavra = random.choice(listaPalavras)
+
+    return palavra
     
-    def main(self):
-        print(self.palavra)
-        
-        chances = len(desenhaBoneco)
-        print('Bem-vindo(a) ao jogo da forca!')
-        print('Adivinhe a palavra abaixo:')
-        
-        
-        while chances > 0:
-            print(self.letrasCorretas)
-            print(self.statusJogo())
-            print(' '.join(self.escondeLetra()))
-            print('\n Chances restantes: ', chances)
-            print('Letras erradas: ', ' '.join(self.letrasErradas))
+def main():
 
+    jogo = Forca(escolhePalavra())
 
-            letraDigitada = input('\n Digite uma letra: ').lower()
-            
-            self.advinhaLetra(letraDigitada)
-            self.veificaVitoria()
-
-
-            chances -= 1
-            
-
-           
-           # self.lerPalavra()
-
-        
-        
-        
-
-
+    print(jogo.palavra)
+    limpaTela()
+    chances = len(desenhaBoneco)
+    print('Bem-vindo(a) ao jogo da forca!')
+    print('Adivinhe a palavra abaixo:')
     
     
-    def game():
-        listaPalavras = ['melão','abacaxi','pera','maçã']
+    while chances > 0:
+        print(jogo.letrasCorretas)
+        print(jogo.statusJogo())
+        print(' '.join(jogo.escondeLetra()))
+        print('\n Chances restantes: ', chances)
+        print('Letras erradas: ', ' '.join(jogo.letrasErradas))
 
-        palavra = random.choice(listaPalavras)
-        game = Forca(palavra)
 
-        limpaTela()
+        letraDigitada = input('\n Digite uma letra: ').lower()
+        
+        jogo.advinhaLetra(letraDigitada)
+        jogo.veificaVitoria()
 
-        game.main()
+
+        chances -= 1
+
+
+
+
 
 
 
 
    
-Forca.game()
+main()
 
 
 #ler uma palava aleatoria do banco de palavras
