@@ -89,7 +89,12 @@ desenhaBoneco = [
 ]
 
 
+def escolhePalavra():
+    listaPalavras = ['melão','abacaxi','pera','maçã']
 
+    palavra = random.choice(listaPalavras)
+
+    return palavra
 
 
 class Forca():
@@ -110,21 +115,17 @@ class Forca():
                 rtn += letra
         return rtn
 
-    def array(self):
-        for letra in self.palavra:
-            if '_' not in self.letrasCorretas:
-                self.letrasCorretas.append('_')
+
     
     def advinhaLetra(self,letra):
         
         if letra in self.palavra:
-            index = 0
             
             for carac in self.palavra:
-                self.array()
+               
                 if carac == letra:
-                    self.letrasCorretas[index] = carac
-                index +=1
+                    self.letrasCorretas.append(carac)
+                
             return self.letrasCorretas
 
         else:
@@ -133,22 +134,31 @@ class Forca():
 
     def statusJogo(self):
 
+        print('Bem-vindo(a) ao jogo da forca!')
+        print('Adivinhe a palavra abaixo:')
+
+        print(desenhaBoneco[len(self.letrasErradas)])
+
+        print(' '.join(self.escondeLetra()))
+       # print('\n Chances restantes: ', chances)
+        print('Letras erradas: ', ' '.join(self.letrasErradas)) 
+         
+    
+    
+    def verificaVitoria(self):
+        if '_' not in self.letrasCorretas:
+            return True
+        return False
+            
+    def verificaDerrota(self):
         tamanhoErrada = len(self.letrasErradas)
         tamanhoDesenho = len(desenhaBoneco)
 
         if tamanhoErrada >= tamanhoDesenho:
             return 'Você perdeu. A palavra era: ', self.palavra
-            
-        else:
-            return desenhaBoneco[len(self.letrasErradas)]
-         
     
-    
-    def veificaVitoria(self):
-        if '_' not in self.letrasCorretas:
-            return '\nParabéns você venceu, a palavra era: ', self.palavra 
-            
-
+    def fimJogo(self):
+        return self.verificaVitoria() or (len(self.letrasErradas) == 6)
     
     def regraGame(chances):
 
@@ -208,41 +218,40 @@ class Forca():
             print('Você perdeu. A palavra era: ', palavra)
 
 
-def escolhePalavra():
-    listaPalavras = ['melão','abacaxi','pera','maçã']
-
-    palavra = random.choice(listaPalavras)
-
-    return palavra
     
 def main():
 
-    jogo = Forca(escolhePalavra())
-
-    print(jogo.palavra)
     limpaTela()
-    chances = len(desenhaBoneco)
-    print('Bem-vindo(a) ao jogo da forca!')
-    print('Adivinhe a palavra abaixo:')
+
+    jogo = Forca(escolhePalavra())
     
+    chances = 6
     
     while chances > 0:
-        print(jogo.letrasCorretas)
-        print(jogo.statusJogo())
-        print(' '.join(jogo.escondeLetra()))
-        print('\n Chances restantes: ', chances)
-        print('Letras erradas: ', ' '.join(jogo.letrasErradas))
 
+        jogo.statusJogo()
 
         letraDigitada = input('\n Digite uma letra: ').lower()
         
-        jogo.advinhaLetra(letraDigitada)
-        jogo.veificaVitoria()
 
+        if letraDigitada in jogo.letrasCorretas:
+            print("Você ja digitou essa letra")
+            continue
+        if letraDigitada in jogo.letrasErradas:
+            print("Você ja digitou essa letra")
+            continue
+
+
+        jogo.advinhaLetra(letraDigitada)
 
         chances -= 1
 
+        
+    if jogo.verificaVitoria():
+        print('\nParabéns você venceu, a palavra era: ', jogo.palavra)
 
+    else:
+        jogo.verificaDerrota()
 
 
 
