@@ -1,6 +1,7 @@
 import random
 from os import name, system  
 
+#função para limpar tela ao iniciar novo jogo
 def limpaTela():
 
         #windows
@@ -13,7 +14,7 @@ def limpaTela():
 
     
 
-
+#lista de niveis do boneco
 desenhaBoneco = [
 
 '''
@@ -88,9 +89,9 @@ desenhaBoneco = [
 
 ]
 
-
+#escolhendo palavra randomicamete do banco de palavras
 def escolhePalavra():
-    listaPalavras = ['melão','abacaxi','pera','maçã']
+    listaPalavras = ['melão','uva','figo','mamão','amora','caju','laranja','cupuaçu','morango','cereja','abacaxi','marmelo','jaca','banana','framboesa','açaí','pera','pitanga','coco','acerola','manga','maçã']
 
     palavra = random.choice(listaPalavras)
 
@@ -99,12 +100,13 @@ def escolhePalavra():
 
 class Forca():
 
+    #construtor iniciando listas vazias
     def __init__(self, palavra):
          self.palavra = palavra
          self.letrasErradas = []
          self.letrasCorretas = []
 
-    
+    #inserindo '-' na lista de corretas para apresentar na tela
     def escondeLetra(self):
         rtn = ''
 
@@ -116,7 +118,8 @@ class Forca():
         return rtn
 
 
-    
+    #verifica se a letra digitada pertence a palavra escolhida, 
+    #caso sim adiciona a lista de letra corretas, caso não insere na lista de letras erradas
     def advinhaLetra(self,letra):
         
         if letra in self.palavra:
@@ -128,7 +131,8 @@ class Forca():
         else:
             self.letrasErradas.append(letra)
             return  self.letrasErradas
-
+        
+    #mostra todas interações com usuario e o desenho do boneco
     def statusJogo(self):
 
         print('Bem-vindo(a) ao jogo da forca!')
@@ -137,24 +141,25 @@ class Forca():
         print(desenhaBoneco[len(self.letrasErradas)])
 
         print(' '.join(self.escondeLetra()))
-       # print('\n Chances restantes: ', chances)
         print('Letras erradas: ', ' '.join(self.letrasErradas)) 
          
     
-    
+    #verifica se o '-' está na lista de palavra corretas para e retorna true para declarar vitória
     def verificaVitoria(self):
         if '_' not in self.escondeLetra():
             return True
         return False
-            
+    
+    #informa para o jogador a derrota   
     def verificaDerrota(self):
         print('\nVocê perdeu. A palavra era: ', self.palavra)
-    
+
+    #verifica o fim do jogo caso a vitoria seja true ou o limite de letras erradas seja atingido
     def fimJogo(self):
         return self.verificaVitoria() or (len(self.letrasErradas) == 6)
 
 
-    
+#metodo para executar o programa   
 def main():
 
     limpaTela()
@@ -185,8 +190,7 @@ def main():
     jogo.verificaDerrota()
 
 
-
-   
+  
 main()
 
 
